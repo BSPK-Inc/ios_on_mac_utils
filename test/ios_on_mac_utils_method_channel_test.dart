@@ -9,19 +9,32 @@ void main() {
   const MethodChannel channel = MethodChannel('ios_on_mac_utils');
 
   setUp(() {
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(
       channel,
       (MethodCall methodCall) async {
-        return '42';
+        switch (methodCall.method) {
+          case 'startListeningToApplicationEvents':
+            return true;
+          case 'stopListeningToApplicationEvents':
+            return true;
+          default:
+            return null;
+        }
       },
     );
   });
 
   tearDown(() {
-    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger.setMockMethodCallHandler(channel, null);
+    TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
+        .setMockMethodCallHandler(channel, null);
   });
 
-  test('getPlatformVersion', () async {
-    expect(await platform.getPlatformVersion(), '42');
+  test('startListeningToApplicationEvents', () async {
+    expect(await platform.startListeningToApplicationEvents(), true);
+  });
+
+  test('stopListeningToApplicationEvents', () async {
+    expect(await platform.stopListeningToApplicationEvents(), true);
   });
 }

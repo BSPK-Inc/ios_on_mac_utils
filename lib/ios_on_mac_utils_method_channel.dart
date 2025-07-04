@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
@@ -9,9 +10,31 @@ class MethodChannelIosOnMacUtils extends IosOnMacUtilsPlatform {
   @visibleForTesting
   final methodChannel = const MethodChannel('ios_on_mac_utils');
 
+  /// The event channel used to receive application events from the native platform.
+  @visibleForTesting
+  final eventChannel = const EventChannel('ios_on_mac_utils/events');
+
   @override
-  Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
-    return version;
+  Future<bool> startListeningToApplicationEvents() async {
+    final result = await methodChannel
+        .invokeMethod<bool>('startListeningToApplicationEvents');
+    return result ?? false;
+  }
+
+  @override
+  Future<bool> stopListeningToApplicationEvents() async {
+    final result = await methodChannel
+        .invokeMethod<bool>('stopListeningToApplicationEvents');
+    return result ?? false;
+  }
+
+  @override
+  Stream<String> get applicationEvents {
+    return eventChannel.receiveBroadcastStream().map((event) {
+      if (event is String) {
+        return event;
+      }
+      return '';
+    });
   }
 }

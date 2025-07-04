@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'ios_on_mac_utils_method_channel.dart';
@@ -23,7 +24,22 @@ abstract class IosOnMacUtilsPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+  /// Starts listening to application events like NSApplicationDidBecomeActiveNotification.
+  /// This is particularly useful for iOS apps running on macOS.
+  Future<bool> startListeningToApplicationEvents() {
+    throw UnimplementedError(
+        'startListeningToApplicationEvents() has not been implemented.');
+  }
+
+  /// Stops listening to application events.
+  Future<bool> stopListeningToApplicationEvents() {
+    throw UnimplementedError(
+        'stopListeningToApplicationEvents() has not been implemented.');
+  }
+
+  /// Returns a stream of application events.
+  /// Events include application state changes like becoming active.
+  Stream<String> get applicationEvents {
+    throw UnimplementedError('applicationEvents has not been implemented.');
   }
 }
