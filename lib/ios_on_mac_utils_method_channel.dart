@@ -37,4 +37,9 @@ class MethodChannelIosOnMacUtils extends IosOnMacUtilsPlatform {
       return '';
     });
   }
+
+  @override
+  setClipboardText(String text) async {
+    await methodChannel.invokeMethod('setClipboardText', text);
+  }
 }

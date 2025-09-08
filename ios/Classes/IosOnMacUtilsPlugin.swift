@@ -1,5 +1,6 @@
 import Flutter
 import UIKit
+import UniformTypeIdentifiers
 
 public class IosOnMacUtilsPlugin: NSObject, FlutterPlugin {
   private var eventChannel: FlutterEventChannel?
@@ -21,6 +22,15 @@ public class IosOnMacUtilsPlugin: NSObject, FlutterPlugin {
       startListeningToApplicationEvents(result: result)
     case "stopListeningToApplicationEvents":
       stopListeningToApplicationEvents(result: result)
+    case "setClipboardText":
+      print("setClipboardText")
+      guard let text = call.arguments as? String else {
+        result(FlutterError(code: "INVALID_ARGUMENTS", message: "Invalid arguments", details: nil))
+        return
+      }
+      print(text)
+      setClipboardText(text: text)
+      result(true)
     default:
       result(FlutterMethodNotImplemented)
     }
@@ -71,6 +81,11 @@ public class IosOnMacUtilsPlugin: NSObject, FlutterPlugin {
   @objc private func applicationDidResignActive() {
     // Send event to Flutter
     eventSink?("applicationDidResignActive")
+  }
+
+  private func setClipboardText(text: String) {
+    // Copy text to pasteboard
+    UIPasteboard.general.setValue(text, forPasteboardType: UTType.plainText.identifier)
   }
 }
 

@@ -22,6 +22,12 @@ class MockIosOnMacUtilsPlatform
           : 'applicationDidResignActive';
     }).take(2);
   }
+
+  @override
+  setClipboardText(String text) {
+    // TODO: implement setClipboardText
+    throw UnimplementedError();
+  }
 }
 
 void main() {

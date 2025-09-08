@@ -42,4 +42,8 @@ abstract class IosOnMacUtilsPlatform extends PlatformInterface {
   Stream<String> get applicationEvents {
     throw UnimplementedError('applicationEvents has not been implemented.');
   }
+
+  setClipboardText(String text) {
+    throw UnimplementedError('setClipboardText() has not been implemented.');
+  }
 }

@@ -18,4 +18,9 @@ class IosOnMacUtils {
   Stream<String> get applicationEvents {
     return IosOnMacUtilsPlatform.instance.applicationEvents;
   }
+
+  /// Copies text to the pasteboard.
+  setClipboardText(String text) {
+    return IosOnMacUtilsPlatform.instance.setClipboardText(text);
+  }
 }
